@@ -1,0 +1,1 @@
+ផ្ទុក global state management (ដូចជា React Context API) សម្រាប់ចែករំលែកទិន្នន័យទូទាំងកម្មវិធីដោយមិនបាច់ឆ្លងកាត់ props (ឧ. User Auth State, Theme Dark/Light)
