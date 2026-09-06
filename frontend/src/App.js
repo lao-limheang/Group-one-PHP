@@ -1,10 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import Navbar from './components/Navbar';
-import Home from './pages/home';
-import Login from './pages/login';
-import HeaderBar from './components/Header';
-import Dashboard from './pages/dashboard';
+import HeaderBar from './components/HeaderBar';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
