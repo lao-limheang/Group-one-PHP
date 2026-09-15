@@ -142,6 +142,7 @@ export default function Dashboard() {
       </div>
 
       {/* Recent orders */}
+      {/* 
       <div className="bg-white rounded-xl shadow-sm mt-6 overflow-hidden">
         <div className="p-5 border-b flex items-center justify-between">
           <h2 className="font-bold">Recent Orders</h2>
@@ -182,6 +183,7 @@ export default function Dashboard() {
           </table>
         )}
       </div>
+      */}
     </div>
   );
 }

@@ -18,9 +18,9 @@ const MOCK_PRODUCTS = [
 ];
 
 const MOCK_CUSTOMERS = [
-  { id: 1, name: 'Sokha Chan', phone: '012 345 678', order_count: 5, total_spent: 1250.0 },
-  { id: 2, name: 'Bory Nguon', phone: '098 765 432', order_count: 3, total_spent: 890.0 },
-  { id: 3, name: 'Vannak Heng', phone: '077 112 233', order_count: 2, total_spent: 450.0 },
+  { id: 1, name: 'Lao Limheang', phone: '012 345 678', order_count: 5, total_spent: 1250.0 },
+  { id: 2, name: 'Rith Lymeng', phone: '098 765 432', order_count: 3, total_spent: 890.0 },
+  { id: 3, name: 'Chork Chansovanpanha', phone: '077 112 233', order_count: 2, total_spent: 450.0 },
 ];
 
 export default function Reports() {

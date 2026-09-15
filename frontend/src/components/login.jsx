@@ -16,10 +16,10 @@ export default function Login({ setUser }) {
     const { username, password } = form;
 
     // Authentication Logic
-    if (username === 'admin' && password === '123') {
+    if (username === 'admin' && password === '123456') {
       if (setUser) setUser({ full_name: 'Chork Chansovanpanha', role: 'Admin' });
       navigate('/dashboard');
-    } else if (username === 'cashier' && password === '123') {
+    } else if (username === 'cashier' && password === '123456') {
       if (setUser) setUser({ full_name: 'Som Sreyvith', role: 'Cashier' });
       navigate('/dashboard');
     } else {
@@ -62,7 +62,7 @@ export default function Login({ setUser }) {
               value={form.username}
               onChange={(e) => setForm({ ...form, username: e.target.value })}
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none transition-all"
-              placeholder="Enter username (e.g. admin)"
+              placeholder="Enter username"
               required
               autoFocus
             />

@@ -2,6 +2,8 @@ import React, { useMemo, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FiCreditCard, FiMinus, FiPlus, FiSearch, FiShoppingCart, FiTrash2, FiX } from 'react-icons/fi';
 
+import khqrImage from '../assets/QR.jpg';
+
 // Mock Product Catalog Data
 const INITIAL_PRODUCTS = [
   {
@@ -117,7 +119,7 @@ export default function POS() {
   const payCash = () => {
     if (cart.length === 0) { toast.error('Cart is empty'); return; }
     const mockOrderNum = Math.floor(1000 + Math.random() * 9000);
-    toast.success(`បានលក់ជោគជ័យ! Order #${mockOrderNum} — paid`);
+    toast.success(`Successfull Sell! Order #${mockOrderNum} — paid`);
     updateLocalStock();
     setCart([]); setCustomerName('POS Customer'); setCustomerPhone('');
   };
@@ -129,13 +131,13 @@ export default function POS() {
     
     setPayModal({ order: mockOrder, verified: false });
 
-    // Mock payment verification simulation after 3 seconds
+    // Mock payment verification simulation after 5 seconds
     payTimer.current = setTimeout(() => {
       toast.success('KHQR payment confirmed! Stock updated');
       setPayModal((m) => (m ? { ...m, verified: true } : m));
       updateLocalStock();
       setCart([]);
-    }, 3000);
+    }, 5000);
   };
 
   return (
@@ -251,7 +253,7 @@ export default function POS() {
 
           <div className="space-y-2">
             <button onClick={payCash} disabled={cart.length === 0} className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl disabled:opacity-40 shadow-sm transition">
-              បង់ប្រាក់ផ្ទាល់ (Cash)
+              Pay By Cash
             </button>
             <button onClick={payKHQR} disabled={cart.length === 0} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl disabled:opacity-40 shadow-sm transition">
               KHQR (ABA Pay)
@@ -336,20 +338,22 @@ export default function POS() {
             <h3 className="font-bold text-lg mb-1">Scan to pay (ABA KHQR)</h3>
             <p className="text-sm text-gray-500 mb-4">Order #{payModal.order.order_number} · ${payModal.order.total.toFixed(2)}</p>
             
-            <div className="w-56 h-56 mx-auto rounded-xl border p-4 bg-slate-50 flex flex-col items-center justify-center">
-              <div className="w-32 h-32 bg-slate-200 rounded-lg flex items-center justify-center text-slate-400 text-xs font-mono border border-dashed border-slate-400">
-                [KHQR QR Code]
-              </div>
-              <p className="text-xs text-slate-500 mt-2">Demo ABA KHQR Standalone</p>
+            {/* ប្រើប្រាស់រូបភាព KHQR ដែលបាន Import (khqrImage) */}
+            <div className="w-60 h-60 mx-auto rounded-xl border p-2 bg-white flex items-center justify-center shadow-inner">
+              <img 
+                src={khqrImage} 
+                alt="ABA KHQR Payment Code" 
+                className="w-full h-full object-contain rounded-lg"
+              />
             </div>
 
             <p className="text-sm text-gray-600 mt-3 font-medium">
-              {payModal.verified ? '✓ Payment confirmed!' : '⏳ Simulating payment (3s)...'}
+              {payModal.verified ? '✓ Payment confirmed!' : '⏳ Simulating payment (5s)...'}
             </p>
             <div className="mt-4">
               <button
                 onClick={() => { clearTimeout(payTimer.current); setPayModal(null); }}
-                className="w-full px-4 py-2.5 rounded-xl border text-gray-600 font-semibold hover:bg-gray-50"
+                className="w-full px-4 py-2.5 rounded-xl border text-gray-600 font-semibold hover:bg-gray-50 transition"
               >
                 Close
               </button>

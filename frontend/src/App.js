@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, NavLink, Navigate, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink, Navigate, Outlet, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+
+// 1. Import Font Awesome Components & Icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
-  FiHome, 
-  FiShoppingCart, 
-  FiBox, 
-  FiGrid, 
-  FiBarChart2, 
-  FiLogOut 
-} from 'react-icons/fi';
+  faHouse, 
+  faCartShopping, 
+  faBox, 
+  faGrip, 
+  faChartSimple, 
+  faRightFromBracket,
+  faClock,
+  faBell,
+  faCircleQuestion 
+} from '@fortawesome/free-solid-svg-icons';
 
 import Dashboard from './components/dashboard';
 import POS from './components/POS';
@@ -19,65 +25,118 @@ import Login from './components/login';
 import Logout from './components/logout';
 
 function MainLayout({ user }) {
+  const location = useLocation();
+
+  const getPageTitle = () => {
+    switch (location.pathname) {
+      case '/dashboard': return 'Dashboard';
+      case '/pos': return 'Sales & POS';
+      case '/products': return 'Products';
+      case '/categories': return 'Categories';
+      case '/report': return 'Reports';
+      default: return 'Dashboard';
+    }
+  };
+
   const navLinkStyle = ({ isActive }) =>
     `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
       isActive
-        ? 'bg-indigo-600 text-white font-semibold'
-        : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+        ? 'bg-[#2c3440] text-white font-semibold border-l-4 border-cyan-400'
+        : 'text-gray-400 hover:bg-[#2c3440]/50 hover:text-white'
     }`;
 
   return (
-    <div className="flex min-h-screen bg-slate-100 text-slate-900">
-      <aside className="w-64 bg-slate-900 text-slate-100 flex flex-col fixed inset-y-0 left-0 z-30 shadow-xl">
-        <div className="p-6 border-b border-slate-800">
-          <h1 className="text-xl font-bold tracking-wide text-white">
-            Angkor-Electronic
-          </h1>
-          {user && (
-            <div className="mt-2 text-xs text-indigo-400">
-              👤 {user.full_name} ({user.role})
+    <div className="flex min-h-screen bg-[#f4f5f7] text-gray-800">
+      
+      {/* Sidebar */}
+      <aside className="w-64 bg-[#22252a] text-gray-300 flex flex-col fixed inset-y-0 left-0 z-30 shadow-xl justify-between">
+        <div>
+          {/* Brand Header */}
+          <div className="p-4 border-b border-gray-800 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-[#1b8398] flex items-center justify-center text-white font-bold text-xl">
+              A
             </div>
-          )}
+            <div>
+              <h1 className="text-sm font-bold tracking-wide text-white leading-none">
+                Angkor-Electronic
+              </h1>
+              <p className="text-[10px] text-gray-400 mt-1">PHONE MANAGEMENT SYSTEM</p>
+              {user && (
+                <div className="mt-1 text-[11px] text-cyan-400">
+                  👤 {user.full_name} ({user.role})
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Navigation Links (ប្រើ FontAwesomeIcon) */}
+          <nav className="flex-1 px-3 py-4 space-y-1">
+            <NavLink to="/dashboard" className={navLinkStyle}>
+              <FontAwesomeIcon icon={faHouse} className="w-4 h-4" />
+              <span>Dashboard</span>
+            </NavLink>
+
+            <NavLink to="/pos" className={navLinkStyle}>
+              <FontAwesomeIcon icon={faCartShopping} className="w-4 h-4" />
+              <span>POS</span>
+            </NavLink>
+
+            <NavLink to="/products" className={navLinkStyle}>
+              <FontAwesomeIcon icon={faBox} className="w-4 h-4" />
+              <span>Products</span>
+            </NavLink>
+
+            <NavLink to="/categories" className={navLinkStyle}>
+              <FontAwesomeIcon icon={faGrip} className="w-4 h-4" />
+              <span>Categories</span>
+            </NavLink>
+
+            <NavLink to="/report" className={navLinkStyle}>
+              <FontAwesomeIcon icon={faChartSimple} className="w-4 h-4" />
+              <span>Reports</span>
+            </NavLink>
+          </nav>
         </div>
 
-        <nav className="flex-1 px-4 py-6 space-y-1">
-          <NavLink to="/dashboard" className={navLinkStyle}>
-            <FiHome size={18} />
-            <span>Dashboard</span>
-          </NavLink>
-
-          <NavLink to="/pos" className={navLinkStyle}>
-            <FiShoppingCart size={18} />
-            <span>POS</span>
-          </NavLink>
-
-          <NavLink to="/products" className={navLinkStyle}>
-            <FiBox size={18} />
-            <span>Products</span>
-          </NavLink>
-
-          <NavLink to="/categories" className={navLinkStyle}>
-            <FiGrid size={18} />
-            <span>Categories</span>
-          </NavLink>
-
-          <NavLink to="/report" className={navLinkStyle}>
-            <FiBarChart2 size={18} />
-            <span>Reports</span>
-          </NavLink>
-        </nav>
-
-        <div className="p-4 border-t border-slate-800">
+        {/* Footer Logout */}
+        <div className="p-3 border-t border-gray-800">
           <NavLink to="/logout" className={navLinkStyle}>
-            <FiLogOut size={18} />
+            <FontAwesomeIcon icon={faRightFromBracket} className="w-4 h-4" />
             <span>Logout</span>
           </NavLink>
         </div>
       </aside>
 
-      <main className="flex-1 ml-64 p-8 overflow-y-auto min-h-screen">
-        <Outlet />
-      </main>
+      {/* Main Content Area */}
+      <div className="flex-1 ml-64 flex flex-col min-h-screen">
+        
+        {/* Header Bar */}
+        <header className="bg-[#1b8398] text-white px-8 py-4 flex items-center justify-between shadow-sm sticky top-0 z-20">
+          <div>
+            <h1 className="text-xl font-bold">{getPageTitle()}</h1>
+            <p className="text-xs text-cyan-100">Angkor-Electronic</p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 bg-[#176d7e] px-3 py-1.5 rounded-lg text-xs font-medium">
+              {/* <FontAwesomeIcon icon={faClock} /> */}
+              {/* <span>Wed 12 Aug 2026 02:40 PM</span> */}
+            </div>
+            {/* <button className="p-2 bg-[#176d7e] rounded-lg hover:bg-[#145d6c] transition">
+              <FontAwesomeIcon icon={faBell} />
+            </button>
+            <button className="p-2 bg-[#176d7e] rounded-lg hover:bg-[#145d6c] transition">
+              <FontAwesomeIcon icon={faCircleQuestion} />
+            </button> */}
+          </div>
+        </header>
+
+        {/* Main Body */}
+        <main className="flex-1 p-8 overflow-y-auto">
+          <Outlet />
+        </main>
+      </div>
+
     </div>
   );
 }

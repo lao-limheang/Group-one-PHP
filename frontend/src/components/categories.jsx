@@ -11,7 +11,6 @@ const INITIAL_CATEGORIES = [
 
 const emptyForm = { name: '', slug: '', sort_order: 0 };
 
-// Inline Modal Component
 function Modal({ open, title, onClose, children }) {
   if (!open) return null;
   return (
